@@ -8,7 +8,7 @@ interface TrainingMetrics {
   ratingExplanation: string;
 }
 
-const calculateExercises = (data: number[], target: number): TrainingMetrics => {
+export const calculateExercises = (data: number[], target: number): TrainingMetrics => {
   const periodLength = data.length;
   const trainingDays = data.filter((day: number) => day > 0).length;
   const average = data.reduce((a: number, b: number) => a + b, 0) / periodLength;
@@ -51,6 +51,8 @@ const parseArguments = (args: string[]): TrainingInput => {
   };
 }
 
-const args = process.argv.slice(2);
-const { data, target } = parseArguments(args);
-console.log(calculateExercises(data, target));
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  const { data, target } = parseArguments(args);
+  console.log(calculateExercises(data, target));
+}
