@@ -14,4 +14,27 @@ const calculateBmi = (height: number, weight: number): string => {
   }
 };
 
-console.log(calculateBmi(180, 74));
+interface BodyData {
+  height: number;
+  weight: number;
+}
+
+const parseBmiArguments = (args: string[]): BodyData => {
+  if (args.length < 2) throw new Error('Provide height and weight');
+
+  const height = Number(args[0]);
+  const weight = Number(args[1]);
+
+  if (isNaN(height) || isNaN(weight)) {
+    throw new Error('Use numbers only');
+  }
+
+  return {
+    height,
+    weight
+  };
+}
+
+const bmiArgs = process.argv.slice(2);
+const { height, weight } = parseBmiArguments(bmiArgs);
+console.log(calculateBmi(height, weight));
