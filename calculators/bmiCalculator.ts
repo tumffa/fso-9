@@ -1,4 +1,4 @@
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   const hInMeters = height / 100;
   const bmi = weight / (hInMeters * hInMeters);
 
@@ -11,6 +11,8 @@ const calculateBmi = (height: number, weight: number): string => {
       return 'Overweight';
     case bmi >= 30:
       return 'Obese';
+    default:
+      return 'Invalid BMI';
   }
 };
 
@@ -35,6 +37,8 @@ const parseBmiArguments = (args: string[]): BodyData => {
   };
 }
 
-const bmiArgs = process.argv.slice(2);
-const { height, weight } = parseBmiArguments(bmiArgs);
-console.log(calculateBmi(height, weight));
+if (require.main === module) {
+  const bmiArgs = process.argv.slice(2);
+  const { height, weight } = parseBmiArguments(bmiArgs);
+  console.log(calculateBmi(height, weight));
+}
