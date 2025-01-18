@@ -13,6 +13,12 @@ export type Patient = {
   occupation: string;
 };
 
+export enum Gender {
+  Other = 'other',
+  Male = 'male',
+  Female = 'female',
+};
+
 export type NewPatient = Omit<Patient, 'id'>;
 
 export type CensoredPatient = Omit<Patient, 'ssn'>;
