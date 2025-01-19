@@ -8,39 +8,44 @@ const DiaryForm = ({ submit }: { submit: (entry: DiaryEntry) => void }) => {
   const visibility = useField('text');
   const comment = useField('text');
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submit({
+      id: Number(uuid()),
+      date: date.value,
+      weather: weather.value as Weather,
+      visibility: visibility.value as Visibility,
+      comment: comment.value
+    });
+    date.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+    weather.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+    visibility.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+    comment.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+  };
+
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      submit({
-        id: Number(uuid()),
-        date: date.value,
-        weather: weather.value as Weather,
-        visibility: visibility.value as Visibility,
-        comment: comment.value
-      });
-      date.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
-      weather.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
-      visibility.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
-      comment.onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
-    }}>
-      <div>
-        <label>Date</label>
-        <input type={date.type} value={date.value} onChange={date.onChange} />
-      </div>
-      <div>
-        <label>Weather</label>
-        <input type={weather.type} value={weather.value} onChange={weather.onChange} />
-      </div>
-      <div>
-        <label>Visibility</label>
-        <input type={visibility.type} value={visibility.value} onChange={visibility.onChange} />
-      </div>
-      <div>
-        <label>Comment</label>
-        <input type={comment.type} value={comment.value} onChange={comment.onChange} />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    <div>
+      <h3>Add a new diary entry</h3>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Date</label>
+          <input {...date} />
+        </div>
+        <div>
+          <label>Weather</label>
+          <input {...weather} />
+        </div>
+        <div>
+          <label>Visibility</label>
+          <input {...visibility} />
+        </div>
+        <div>
+          <label>Comment</label>
+          <input {...comment} />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 
