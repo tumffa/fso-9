@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { DiaryEntry } from './types'
 import DiaryComponent from './components/DiaryEntry'
+import DiaryForm from './components/DiaryForm'
 
 const baseUrl = 'http://localhost:3000/api/diaries';
 
@@ -17,11 +18,17 @@ const App = () => {
     fetchDiaries();
   }, []); 
 
+  const submitDiary = async (entry: DiaryEntry) => {
+    const response = await axios.post(baseUrl, entry);
+    setDiaries(diaries.concat(response.data));
+  };
+
   return (
     <div>
       <h1>Diaries</h1>
+      <DiaryForm submit={submitDiary} />
       {diaries.map(diary =>
-        <p><DiaryComponent key={diary.id} entry={diary} /></p>
+        <DiaryComponent key={diary.id} entry={diary} />
       )}
     </div>
   );
