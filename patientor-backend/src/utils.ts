@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Gender, NewPatient } from './types';
+import { Gender, NewPatient, Entry } from './types';
 
 export const newPatientSchema = z.object({
   name: z.string(),
@@ -9,9 +9,15 @@ export const newPatientSchema = z.object({
   ssn: z.string(),
   gender: z.nativeEnum(Gender),
   occupation: z.string(),
-  entries: z.array(z.object({})),
+  entries: z.array(z.object({
+    type: z.enum(['Hospital', 'OccupationalHealthcare']),
+  })).optional(),
 });
 
 export const toNewPatient = (object: unknown): NewPatient => {
-  return newPatientSchema.parse(object);
+  const parsedPatient = newPatientSchema.parse(object);
+  return {
+    ...parsedPatient,
+    entries: (parsedPatient.entries || []) as Entry[]
+  };
 };

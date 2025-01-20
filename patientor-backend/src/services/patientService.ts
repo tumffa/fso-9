@@ -3,7 +3,7 @@ import patients from '../../data/patients';
 import { Patient } from '../types';
 import { CensoredPatient } from '../types';
 import { NewPatient } from '../types';
-import { Gender } from '../types';
+import { Gender, Entry } from '../types';
 
 const getCensoredPatients = (): CensoredPatient[] => {
   return patients.map((
@@ -29,7 +29,10 @@ const addPatient = (patient: NewPatient): Patient => {
 const getPatient = (id: string): Patient | undefined => {
   const patient = patients.find(patient => patient.id === id);
   if (patient) {
-    return { ...patient, gender: patient.gender as Gender };
+    return { ...patient,
+      gender: patient.gender as Gender,
+      entries: patient.entries as Entry[]
+    };
   }
   return undefined;
 };
