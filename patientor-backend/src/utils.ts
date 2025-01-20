@@ -8,7 +8,8 @@ export const newPatientSchema = z.object({
   }),
   ssn: z.string(),
   gender: z.nativeEnum(Gender),
-  occupation: z.string()
+  occupation: z.string(),
+  entries: z.array(z.object({})),
 });
 
 export const toNewPatient = (object: unknown): NewPatient => {
