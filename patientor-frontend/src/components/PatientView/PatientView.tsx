@@ -47,6 +47,21 @@ const PatientView = ({ fetchPatient }: Props) => {
         </h2>
         <p>ssn: {patient?.ssn}</p>
         <p>occupation: {patient?.occupation}</p>
+        <h3>entries</h3>
+        <ul>
+          {patient?.entries.map((entry) => (
+            <p>
+            <li key={entry.id}>
+              {entry.date} <i>{entry.description}</i>
+              <ul>
+                {entry.diagnosisCodes?.map((code) => (
+                  <li key={code}>{code}</li>
+                ))}
+              </ul>
+            </li>
+            </p>
+          ))}
+        </ul>
       </div>
     );
   };
